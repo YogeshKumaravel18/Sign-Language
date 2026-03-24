@@ -9,9 +9,12 @@ import os
 app = FastAPI()
 
 # ---------------- MODEL LOAD ----------------
-MODEL_PATH = os.path.join("model", "sign_language_model.h5")
+import os
+import tensorflow as tf
 
-model = tf.keras.models.load_model(MODEL_PATH, compile=False)
+MODEL_PATH = os.path.join("model", "new_model.keras")
+
+model = tf.keras.models.load_model(MODEL_PATH)
 
 labels = ['enna pannura', 'vanakam']
 
