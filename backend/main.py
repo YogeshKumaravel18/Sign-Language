@@ -1,26 +1,25 @@
 from fastapi import FastAPI, File, UploadFile
 import numpy as np
-
 from PIL import Image
 import io
 import mediapipe as mp
-print(mp.__file__)
-print(dir(mp))
+import tensorflow as tf
+import os
 
 app = FastAPI()
 
-import tensorflow as tf
+# ---------------- MODEL LOAD ----------------
+MODEL_PATH = os.path.join("model", "sign_language_model.h5")
 
-model = tf.keras.models.load_model("sign_language_model.h5", compile=False)
-model.save("new_model.keras")
-model = tf.keras.models.load_model("model/new_model.keras")
+model = tf.keras.models.load_model(MODEL_PATH, compile=False)
 
 labels = ['enna pannura', 'vanakam']
 
-# Mediapipe
+# ---------------- MEDIAPIPE ----------------
 mp_hands = mp.solutions.hands
 hands = mp_hands.Hands(max_num_hands=1)
 
+# ---------------- ROUTES ----------------
 @app.get("/")
 def home():
     return {"message": "API Running 🚀"}
