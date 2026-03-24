@@ -1,6 +1,6 @@
 from fastapi import FastAPI, File, UploadFile
 import numpy as np
-from tensorflow.keras.models import load_model
+
 from PIL import Image
 import io
 import mediapipe as mp
@@ -9,8 +9,12 @@ print(dir(mp))
 
 app = FastAPI()
 
-# Load model
-model = load_model("model/sign_language_model.h5")
+import tensorflow as tf
+
+model = tf.keras.models.load_model(
+    "model/sign_language_model.h5",
+    compile=False
+)
 
 labels = ['enna pannura', 'vanakam']
 
