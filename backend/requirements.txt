@@ -1,7 +1,7 @@
 fastapi
 uvicorn
-tensorflow
-mediapipe
+tensorflow==2.13.0
+mediapipe==0.10.9
 numpy
 pillow
 python-multipart
