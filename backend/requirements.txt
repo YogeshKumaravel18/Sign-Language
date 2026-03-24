@@ -1,6 +1,6 @@
 fastapi
 uvicorn
-tensorflow-cpu
+tensorflow==2.12.0
 mediapipe==0.10.9
 numpy
 pillow
