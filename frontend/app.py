@@ -10,7 +10,7 @@ st.title("🖐️ Sign Language Detection")
 st.write("Capture image → send to AI backend → get prediction")
 
 # 🔥 CHANGE THIS AFTER DEPLOYMENT
-API_URL = "https://your-app-name.onrender.com/predict"
+API_URL = "https://sign-language-vifu.onrender.com"
 
 # ---------------- CAMERA ----------------
 img_file_buffer = st.camera_input("📸 Take a picture")
