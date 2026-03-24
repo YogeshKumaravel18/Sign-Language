@@ -1,36 +1,36 @@
 import streamlit as st
-import requests
-from PIL import Image
+import cv2
 import numpy as np
+from streamlit_webrtc import webrtc_streamer, VideoTransformerBase
 
-# ---------------- CONFIG ----------------
-st.set_page_config(page_title="Sign Language Detection", layout="centered")
+st.title("Sign Language Detection (Vanakkam / Hi / Bye)")
 
-st.title("🖐️ Sign Language Detection")
-st.write("Capture image → send to AI backend → get prediction")
+# Dummy prediction function (replace with your ML model later)
+def predict_sign(frame):
+    # Convert to grayscale (just example processing)
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    
+    # Fake logic for demo
+    avg_pixel = np.mean(gray)
 
-# 🔥 CHANGE THIS AFTER DEPLOYMENT
-API_URL = "https://sign-language-vifu.onrender.com"
+    if avg_pixel < 80:
+        return "Vanakkam 🙏"
+    elif avg_pixel < 150:
+        return "Hi 👋"
+    else:
+        return "Bye 👋"
 
-# ---------------- CAMERA ----------------
-img_file_buffer = st.camera_input("📸 Take a picture")
+class VideoTransformer(VideoTransformerBase):
+    def transform(self, frame):
+        img = frame.to_ndarray(format="bgr24")
 
-if img_file_buffer is not None:
-    st.image(img_file_buffer)
+        prediction = predict_sign(img)
 
-    if st.button("🔍 Predict"):
-        with st.spinner("Processing..."):
+        # Display prediction on screen
+        cv2.putText(img, prediction, (50, 50),
+                    cv2.FONT_HERSHEY_SIMPLEX, 1,
+                    (0, 255, 0), 2)
 
-            response = requests.post(
-                API_URL,
-                files={"file": img_file_buffer.getvalue()}
-            )
+        return img
 
-            result = response.json()
-
-            if "prediction" in result:
-                st.success(
-                    f"Prediction: {result['prediction']} ({result['confidence']:.2f})"
-                )
-            else:
-                st.error("❌ No hand detected")
+webrtc_streamer(key="example", video_transformer_factory=VideoTransformer)
