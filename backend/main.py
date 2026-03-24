@@ -11,10 +11,9 @@ app = FastAPI()
 
 import tensorflow as tf
 
-model = tf.keras.models.load_model(
-    "model/sign_language_model.h5",
-    compile=False
-)
+model = tf.keras.models.load_model("sign_language_model.h5", compile=False)
+model.save("new_model.keras")
+model = tf.keras.models.load_model("model/new_model.keras")
 
 labels = ['enna pannura', 'vanakam']
 
