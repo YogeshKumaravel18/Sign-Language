@@ -1,9 +1,11 @@
 from fastapi import FastAPI, File, UploadFile
 import numpy as np
-import mediapipe as mp
 from tensorflow.keras.models import load_model
 from PIL import Image
 import io
+import mediapipe as mp
+print(mp.__file__)
+print(dir(mp))
 
 app = FastAPI()
 
