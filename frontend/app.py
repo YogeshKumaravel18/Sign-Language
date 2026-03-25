@@ -34,4 +34,4 @@ if img_file is not None:
     result = chr(index + 65)
 
     st.success(f"Prediction: {result}")
-    st.info(f"Confidence: {confidence:.2f}")
+  
