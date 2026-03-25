@@ -14,26 +14,24 @@ st.write("Upload an image or take a photo")
 # Camera input
 img_file = st.camera_input("Take a picture")
 
+
 if img_file is not None:
-    # Convert image to OpenCV format
     bytes_data = img_file.getvalue()
     np_arr = np.frombuffer(bytes_data, np.uint8)
     img = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
 
-    # Show image
-    st.image(img, caption="Captured Image", use_column_width=True)
+    st.image(img, caption="Captured Image")
 
-    # Preprocess (IMPORTANT - match your model)
-    img = cv2.resize(img, (64, 64))
+    # ✅ Correct preprocessing
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    img = cv2.resize(img, (28, 28))
     img = img / 255.0
-    img = np.reshape(img, (1, 64, 64, 3))
+    img = np.reshape(img, (1, 28, 28, 1))
 
     # Predict
     prediction = model.predict(img)
     index = np.argmax(prediction)
-    result = labels[index]
-    confidence = np.max(prediction)
+    result = chr(index + 65)
 
-    # Output
     st.success(f"Prediction: {result}")
     st.info(f"Confidence: {confidence:.2f}")
