@@ -2,10 +2,8 @@ import streamlit as st
 import numpy as np
 import cv2
 from tensorflow.keras.models import load_model
-
 # Load model safely
 model = load_model("CNNmodel.h5", compile=False)
-
 # Labels (A-Z)
 labels = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
